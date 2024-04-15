@@ -19,17 +19,19 @@ describe('WordleBoard', () => {
 
   // placeholder test - adding "test.todo" so it won't run
   test("a defeat message appears if the user makes a guess that is incorrect", async() => {
-    // Arrange
     const wrapper = mount(WordleBoard, {props: {wordOfTheDay}})
 
-    // Act
     const guessInput = wrapper.find("input[type=text]")
     await guessInput.setValue("WRONG")
     await guessInput.trigger("keydown.enter")
 
-    // Assert
     expect(wrapper.text()).toContain(DEFEAT_MESSAGE)
   })
 
-  test.todo("no end-of-game message appears if the user has not yet made a guess")
+  test("no end-of-game message appears if the user has not yet made a guess", async() => {
+    const wrapper = mount(WordleBoard, {props: {wordOfTheDay}})
+
+    expect(wrapper.text()).not.toContain(VICTORY_MESSAGE)
+    expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE)
+  })
 })
