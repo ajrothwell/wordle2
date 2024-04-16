@@ -20,7 +20,15 @@ const formattedGuessInProgress = computed({
     return guessInProgress.value
   },
   set(rawValue: string) {
-    guessInProgress.value = rawValue.slice(0, WORD_SIZE).toUpperCase()
+    guessInProgress.value = rawValue
+      .slice(0, WORD_SIZE)
+      .toUpperCase()
+      .replace(/[^A-Z]+/gi, "")
+      // the [] allow me to represent a single character of whatever set I want to define inside the brackets
+      // the ^ meant "not", so it's saying "replace anything that's not A-Z with nothing"
+      // the + means I'm looking for one or more occurrences of a character that matches this set
+      // the g means global, and it makes the regex not return after the first match
+      // the i means case-insensitive
   }
 })
 
