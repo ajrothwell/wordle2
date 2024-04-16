@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from '@/settings'
 import englishWords from "@/englishWordsWith5Letters.json"
-import { ref, computed } from "vue"
+import { ref, computed, watchEffect } from "vue"
 
 defineProps({
   wordOfTheDay: {
@@ -10,33 +10,46 @@ defineProps({
   }
 })
 
-const guessInProgress = ref("")
+const guessInProgress = ref<string|null>(null)
 const guessSubmitted = ref("")
 
 // if you want to make a WRITABLE computed ref, instead of passing a single callback
 // we pass an object that has 2 callbacks inside of it - a getter and a setter
-const formattedGuessInProgress = computed({
+const formattedGuessInProgress = computed<string>({
   get() {
-    return guessInProgress.value
+    // ?? is the null coeleascing operator, which means "if the value on the left is null or undefined, use the value on the right"
+    return guessInProgress.value ?? ""
   },
   set(rawValue: string) {
+    // guessInProgress.value = null
+    
     guessInProgress.value = rawValue
-      .slice(0, WORD_SIZE)
-      .toUpperCase()
-      .replace(/[^A-Z]+/gi, "")
+      // .slice(0, WORD_SIZE)
+      // .toUpperCase()
+      // .replace(/[^A-Z]+/gi, "")
       // the [] allow me to represent a single character of whatever set I want to define inside the brackets
       // the ^ meant "not", so it's saying "replace anything that's not A-Z with nothing"
       // the + means I'm looking for one or more occurrences of a character that matches this set
       // the g means global, and it makes the regex not return after the first match
       // the i means case-insensitive
+    
+    // console.log('rawValue:', rawValue, 'guessInProgress.value:', guessInProgress.value)
   }
 })
 
+watchEffect(() => {
+formattedGuessInProgress.value =
+formattedGuessInProgress.value
+?.slice(0, WORD_SIZE)
+.toUpperCase()
+.replace(/[^A-ZЁА-Я]+/gi, "") ?? "";
+});
+
 function onSubmit() {
-  if(!englishWords.includes(guessInProgress.value)) {
+  if(!englishWords.includes(formattedGuessInProgress.value)) {
     return;
   }
-  guessSubmitted.value = guessInProgress.value
+  guessSubmitted.value = formattedGuessInProgress.value
 }
 
 </script>
