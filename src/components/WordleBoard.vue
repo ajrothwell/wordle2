@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VICTORY_MESSAGE, DEFEAT_MESSAGE } from '@/settings'
+import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from '@/settings'
 import englishWords from "@/englishWordsWith5Letters.json"
 import { ref, computed } from "vue"
 
@@ -13,12 +13,14 @@ defineProps({
 const guessInProgress = ref("")
 const guessSubmitted = ref("")
 
+// if you want to make a WRITABLE computed ref, instead of passing a single callback
+// we pass an object that has 2 callbacks inside of it - a getter and a setter
 const formattedGuessInProgress = computed({
   get() {
     return guessInProgress.value
   },
   set(rawValue: string) {
-    guessInProgress.value = rawValue.slice(0, 5)
+    guessInProgress.value = rawValue.slice(0, WORD_SIZE)
   }
 })
 

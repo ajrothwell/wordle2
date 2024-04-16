@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import WordleBoard from '../WordleBoard.vue'
-import { VICTORY_MESSAGE, DEFEAT_MESSAGE } from '../../settings'
+import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from '../../settings'
 import { beforeEach } from "vitest"
 import { before } from 'node:test'
 
@@ -79,7 +79,7 @@ describe('WordleBoard', () => {
     //   expect(console.warn).toHaveBeenCalled()
     // })
   
-    test("no warning is emitted if the word of the day is a real uppercase English word with 5 characters", async() => {
+    test(`no warning is emitted if the word of the day is a real uppercase English word with ${WORD_SIZE} characters`, async() => {
       // console.warn = vi.fn()
   
       mount(WordleBoard, {props: {wordOfTheDay: "TESTS"}})
@@ -89,7 +89,7 @@ describe('WordleBoard', () => {
   })
 
   describe("Player input", () => {
-    test("player guesses are limited to 5 letters", async() => {
+    test(`player guesses are limited to ${WORD_SIZE} letters`, async() => {
       await playerSubmitsGuess(wordOfTheDay + "EXTRA")
 
       expect(wrapper.text()).toContain(VICTORY_MESSAGE)
