@@ -31,15 +31,23 @@ describe('WordleBoard', () => {
     })
   
     // placeholder test - adding "test.todo" so it won't run
-    describe.each([
-      { numberOfGuesses: 0, shouldSeeDefeatMessage: false },
-      { numberOfGuesses: 1, shouldSeeDefeatMessage: false },
-      { numberOfGuesses: 2, shouldSeeDefeatMessage: false },
-      { numberOfGuesses: 3, shouldSeeDefeatMessage: false },
-      { numberOfGuesses: 4, shouldSeeDefeatMessage: false },
-      { numberOfGuesses: 5, shouldSeeDefeatMessage: false },
-      { numberOfGuesses: MAX_GUESSES_COUNT, shouldSeeDefeatMessage: true },
-    ])(`a defeat message should appear if the player makes incorrect guesses ${MAX_GUESSES_COUNT} times in a row`, ({numberOfGuesses, shouldSeeDefeatMessage}) => {
+    // describe.each([
+    //   { numberOfGuesses: 0, shouldSeeDefeatMessage: false },
+    //   { numberOfGuesses: 1, shouldSeeDefeatMessage: false },
+    //   { numberOfGuesses: 2, shouldSeeDefeatMessage: false },
+    //   { numberOfGuesses: 3, shouldSeeDefeatMessage: false },
+    //   { numberOfGuesses: 4, shouldSeeDefeatMessage: false },
+    //   { numberOfGuesses: 5, shouldSeeDefeatMessage: false },
+    //   { numberOfGuesses: MAX_GUESSES_COUNT, shouldSeeDefeatMessage: true },
+    describe.each(
+      Array.from(
+        {length: MAX_GUESSES_COUNT + 1},
+        (_, numberOfGuesses) => ({
+          numberOfGuesses,
+          shouldSeeDefeatMessage: numberOfGuesses === MAX_GUESSES_COUNT
+        })
+      )
+    )(`a defeat message should appear if the player makes incorrect guesses ${MAX_GUESSES_COUNT} times in a row`, ({numberOfGuesses, shouldSeeDefeatMessage}) => {
       test(`therefore for ${numberOfGuesses} guess(es), a defeat message should ${shouldSeeDefeatMessage? "" : "not"} appear`, async() => {
         for (let i=0; i<numberOfGuesses; i++) {
           await playerSubmitsGuess("WRONG")
