@@ -74,15 +74,15 @@ li:not([data-letter=" "]) {
 }
 
 [data-letter-feedback=correct] {
-  background-color: hsl(120, 25%, 65%);
+  --back-color: hsl(120, 25%, 65%);
 }
 
 [data-letter-feedback=almost] {
-  background-color: hsl(40, 65%, 48%);
+  --back-color: hsl(40, 65%, 48%);
 }
 
 [data-letter-feedback=incorrect] {
-  background-color: hsl(0, 0%, 70%);
+  --back-color: hsl(0, 0%, 70%);
 }
 
 
