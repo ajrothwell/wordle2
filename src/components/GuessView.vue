@@ -12,11 +12,12 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
   }
 
   const letterGuessed = props.guess[letterPosition]
+  const letterExpected = props.answer[letterPosition]
+
   if(!props.answer.includes(letterGuessed)) {
     return 'incorrect';
   }
 
-  const letterExpected = props.answer[letterPosition]
   return letterExpected === letterGuessed ? 'correct' : 'almost';
 }
 
@@ -71,6 +72,19 @@ li:not([data-letter=" "]) {
     transform: scale(1.4);
   }
 }
+
+[data-letter-feedback=correct] {
+  background-color: hsl(120, 25%, 65%);
+}
+
+[data-letter-feedback=almost] {
+  background-color: hsl(40, 65%, 48%);
+}
+
+[data-letter-feedback=incorrect] {
+  background-color: hsl(0, 0%, 70%);
+}
+
 
 $maxWordSize: 5;
 @for $i from 1 through $maxWordSize {
