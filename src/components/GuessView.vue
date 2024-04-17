@@ -6,11 +6,11 @@ import { ref, computed, watchEffect } from "vue"
 // withDefaults(defineProps<{guess: string, shouldFlip?: boolean}>(), {shouldFlip: false})
 const props = defineProps<{guess: string, answer?: string}>()
 
-function getFeedback(letterPosition: number) {
+function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | 'almost' {
   if (!props.answer) {
     return null;
   }
-
+  
   return props.answer[letterPosition] === props.guess[letterPosition] ? 'correct' : 'incorrect';
 }
 
