@@ -11,11 +11,13 @@ function getFeedback(letterPosition: number): null | 'correct' | 'incorrect' | '
     return null;
   }
 
-  if(!props.answer.includes(props.guess[letterPosition])) {
+  const letterGuessed = props.guess[letterPosition]
+  if(!props.answer.includes(letterGuessed)) {
     return 'incorrect';
   }
 
-  return props.answer[letterPosition] === props.guess[letterPosition] ? 'correct' : 'almost';
+  const letterExpected = props.answer[letterPosition]
+  return letterExpected === letterGuessed ? 'correct' : 'almost';
 }
 
 </script>
