@@ -21,11 +21,9 @@ const isGameOver = computed(() =>
 )
 
 const countOfEmptyGuesses = computed(() => {
-  if (guessesSubmitted.value.length < MAX_GUESSES_COUNT) {
-    return MAX_GUESSES_COUNT - guessesSubmitted.value.length - 1
-  } else {
-    return 0
-  }
+  const guessesRemaining = MAX_GUESSES_COUNT - guessesSubmitted.value.length
+
+  return isGameOver.value ? guessesRemaining : guessesRemaining - 1
 })
 
 
